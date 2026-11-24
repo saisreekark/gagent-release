@@ -54,6 +54,19 @@ When a new release is published, pull the latest build:
 git -C /path/to/gagent-release pull
 ```
 
+## Troubleshooting
+
+- **Blocked with "credentials don't identify a verified user account" (or a `*.gserviceaccount.com` address):**
+  On a fresh Cloud Workstation without user ADC, authentication falls back to the workstation's metadata service account; this also happens if ADC was created with custom `--scopes` that omitted `userinfo.email`. Run a plain `gcloud auth application-default login` (no custom `--scopes`) and re-check with `node gagent-release/gagent.mjs doctor`.
+- **Blocked with `<email> is not on the allowlist`:**
+  Confirm you signed into ADC with your whitelisted `@google.com` account (`gcloud auth application-default login`). If your ADC email uses a different domain or alias, ask the release maintainer to include that full email in the next release and `git pull`.
+- **Blocked with `couldn't verify your Google LDAP account` (network, proxy, or transient `429`/`5xx`):**
+  Retry if transient. If your workstation requires `HTTPS_PROXY`, run with `NODE_USE_ENV_PROXY=1` (for example `NODE_USE_ENV_PROXY=1 node gagent-release/gagent.mjs`). Ensure outbound HTTPS to `oauth2.googleapis.com` and `aiplatform.googleapis.com` is permitted.
+- **Blocked with `Google rejected the signed-in ADC credentials`:**
+  Your ADC token is expired or revoked. Run `gcloud auth application-default login` and restart `gagent`.
+- **`No Google Cloud project id could be resolved` or `404` on the first prompt:**
+  Set your project with `gcloud config set project YOUR_PROJECT_ID` (or `export GOOGLE_CLOUD_PROJECT=YOUR_PROJECT_ID`), and ensure `aiplatform.googleapis.com` and **Gemini 4 Neon** in **Vertex AI → Model Garden** are enabled for that project.
+
 ## Third-party licences
 
 See [`THIRD-PARTY-NOTICES.txt`](THIRD-PARTY-NOTICES.txt).
