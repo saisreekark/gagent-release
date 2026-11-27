@@ -1,14 +1,16 @@
-# gagent (1.20.1)
+# gagent (3.1.1)
 
-A terminal coding agent running Gemini and Claude models on Google Vertex AI.
+A terminal coding agent running Gemini and Claude models on Google Vertex AI,
+with a native Rust fullscreen TUI and native Rust Vertex transport.
 No source code or npm package installation is required — clone and run directly
-with Node 22+.
+on `linux-x64` with Node 22+.
 
 Access is restricted to whitelisted `@google.com` LDAP accounts verified via
 Google Application Default Credentials (ADC).
 
 ## Prerequisites
 
+- **Platform:** `linux-x64` (native Rust TUI and Vertex provider are embedded inside `gagent.mjs` and cached in `~/.gagent/cache/release/` on first run)
 - **Node.js 22 or newer** (pre-installed on Cloud Workstations)
 - **Google Cloud CLI (`gcloud`)**
 - A **Google Cloud project** with the Vertex AI API enabled and **Gemini 4 Neon**
