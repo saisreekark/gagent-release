@@ -1,4 +1,4 @@
-# gagent (3.1.1)
+# gagent (3.2.0)
 
 A terminal coding agent running Gemini and Claude models on Google Vertex AI,
 with a native Rust fullscreen TUI and native Rust Vertex transport.
